@@ -26,6 +26,18 @@ class DashboardController extends Controller
         ]);
     }
 
+    /** Creator-side booking list (own profile + studio photographers), newest first. */
+    public function bookings(Request $r): JsonResponse
+    {
+        $status = $r->query('status');
+        $q = Booking::with(['customer:id,name', 'package:id,title', 'photographer:id,display_name'])
+            ->whereIn('photographer_profile_id', $this->profileIds($r->user()))
+            ->when($status, fn ($q, $s) => $q->whereIn('status', explode(',', $s)))
+            ->latest();
+
+        return response()->json($q->paginate(30));
+    }
+
     public function earnings(Request $r): JsonResponse
     {
         $acct = LedgerService::creatorAccount($r->user()->id);

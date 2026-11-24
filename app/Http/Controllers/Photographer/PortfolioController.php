@@ -12,6 +12,17 @@ class PortfolioController extends Controller
 {
     public function __construct(private PortfolioService $portfolios) {}
 
+    public function index(Request $r): JsonResponse
+    {
+        $u = $r->user();
+        $owner = $u->hasRole('studio') ? $u->studio : $u->photographerProfile;
+        abort_unless($owner, 404, 'Create your profile first.');
+
+        return response()->json(
+            $owner->portfolios()->withCount('media')->with('category:id,name')->latest()->get()
+        );
+    }
+
     public function store(StorePortfolioRequest $r): JsonResponse
     {
         $p = $this->portfolios->create($r->user(), $r->safe()->except('files'));

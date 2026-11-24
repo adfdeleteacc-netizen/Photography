@@ -23,6 +23,20 @@ Route::post('/webhooks/razorpay', [PaymentController::class, 'webhook'])->middle
 
 /* ---------- Any authenticated user ---------- */
 Route::middleware(['auth:sanctum', 'throttle:api'])->group(function () {
+    Route::get('/me', function (\Illuminate\Http\Request $r) {
+        $u = $r->user();
+        return response()->json([
+            'id' => $u->id,
+            'name' => $u->name,
+            'email' => $u->email,
+            'roles' => $u->getRoleNames(),
+            'referral_code' => $u->referral_code,
+            'loyalty_points' => $u->loyaltyWallet?->balance ?? 0,
+            'kyc_verified' => $u->isKycVerified(),
+            'kyc_status' => $u->kycDocuments()->where('type', 'pan')->value('status'),
+        ]);
+    });
+
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/kyc', [AuthController::class, 'submitKyc']);
 

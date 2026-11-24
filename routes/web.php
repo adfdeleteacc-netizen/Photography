@@ -20,8 +20,10 @@ Route::get('/creators/{slug}', function (string $slug) {
 
 // SPA-less role dashboards (Blade + Alpine) fetch data from the /api endpoints with the session's Sanctum cookie.
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::view('/photographer/dashboard', 'photographer.dashboard')->middleware('role:photographer|studio')->name('photographer.dashboard');
+    Route::get('/photographer/dashboard', fn () => view('photographer.dashboard', ['categories' => Category::orderBy('name')->get()]))
+        ->middleware('role:photographer|studio')->name('photographer.dashboard');
     Route::view('/admin/dashboard', 'admin.dashboard')->middleware('role:admin')->name('admin.dashboard');
+    Route::view('/my/rewards', 'customer.rewards')->middleware('role:customer')->name('customer.rewards');
     Route::view('/my/bookings', 'customer.bookings')->middleware('role:customer')->name('customer.bookings');
 });
 

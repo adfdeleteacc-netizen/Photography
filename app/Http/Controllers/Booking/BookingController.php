@@ -21,7 +21,7 @@ class BookingController extends Controller
     public function mine(Request $r): JsonResponse
     {
         return response()->json(
-            Booking::with(['photographer:id,display_name,slug', 'package:id,title', 'payment'])
+            Booking::with(['photographer:id,display_name,slug', 'package:id,title', 'payment', 'review:id,booking_id,rating'])
                 ->where('customer_id', $r->user()->id)->latest()->paginate(20)
         );
     }

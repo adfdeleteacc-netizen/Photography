@@ -95,7 +95,7 @@ class BookingService
             unset($price['creator_share_paise']);
             $b->fill($price + [
                 'coupon_id' => $coupon?->id, 'loyalty_points_used' => $pointsUsed,
-                'payment_due_at' => now()->addMinutes(config('marketplace.payment_hold_minutes')),
+                'payment_due_at' => now()->addMinutes((int) config('marketplace.payment_hold_minutes')),
             ]);
 
             if ($coupon) { $this->coupons->consume($coupon, $b, $couponDiscount); }
