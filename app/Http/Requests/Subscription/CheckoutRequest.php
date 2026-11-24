@@ -1,0 +1,17 @@
+<?php
+
+namespace App\Http\Requests\Subscription;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class CheckoutRequest extends FormRequest
+{
+    public function authorize(): bool { return $this->user()?->hasAnyRole(['photographer', 'studio']) ?? false; }
+
+    public function rules(): array
+    {
+        return [
+            'plan_id' => ['required', 'exists:subscription_plans,id'],
+        ];
+    }
+}
