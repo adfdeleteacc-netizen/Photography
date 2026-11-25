@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-slate-50">
+<html lang="en" class="h-full bg-stone-50">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,12 +9,12 @@
     <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
     <?php echo $__env->yieldPushContent('head'); ?>
 </head>
-<body class="min-h-full text-slate-800 antialiased">
-<header class="bg-white/90 backdrop-blur border-b sticky top-0 z-30" x-data="{ menu: false }">
-    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
-        <a href="<?php echo e(route('home')); ?>" class="font-bold text-lg text-indigo-700"><?php echo e(config('app.name')); ?></a>
+<body class="min-h-full text-stone-800 antialiased">
+<header class="bg-white/95 backdrop-blur border-b sticky top-0 z-30" x-data="{ menu: false }">
+    <div class="max-w-7xl mx-auto px-5 sm:px-6 h-16 flex items-center justify-between">
+        <a href="<?php echo e(route('home')); ?>" class="font-bold text-xl text-stone-900"><?php echo e(config('app.name')); ?></a>
         <button class="md:hidden btn-ghost !px-2 !py-1" @click="menu = !menu" aria-label="Menu">☰</button>
-        <nav class="hidden md:flex items-center gap-5 text-sm" >
+        <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
             <a href="<?php echo e(route('home')); ?>" class="hover:text-indigo-600">Find creators</a>
             <?php if(auth()->guard()->check()): ?>
                 <?php if (\Illuminate\Support\Facades\Blade::check('role', 'admin')): ?><a href="<?php echo e(route('admin.dashboard')); ?>" class="hover:text-indigo-600">Admin</a><?php endif; ?>
@@ -54,7 +54,7 @@
     <?php endif; ?>
 <?php endif; ?>
 
-<main class="max-w-6xl mx-auto px-4 py-8"><?php echo $__env->yieldContent('content'); ?></main>
+<main class="max-w-7xl mx-auto px-5 sm:px-6 py-8 lg:py-10"><?php echo $__env->yieldContent('content'); ?></main>
 
 
 <div class="fixed bottom-4 right-4 z-50 space-y-2 w-80 max-w-[90vw]" x-data>
