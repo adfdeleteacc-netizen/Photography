@@ -1,4 +1,4 @@
-# Photography Marketplace (Lensly)
+# Photography Marketplace (RORI)
 
 A Laravel-based marketplace that connects customers with photographers and photography studios. The application supports discovery, booking requests, creator workspaces, subscriptions, payments, portfolio media, customer reviews, messaging, and marketplace administration.
 
